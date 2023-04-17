@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import './App.css';
-import RegisterForm from "./components/RegisterForm";
+import RegisterForm from './components/RegisterForm';
 
 function App() {
-  //cons [token, setToken] = useState(null);
+  const [token, setToken] = useState(null);
 
+  console.log('Token from App: ',token);
   return (
-    <div className="App">
+    <div className='App'>
         <h1>Stranger's Things</h1>
-        <RegisterForm/>
+        <RegisterForm setToken={setToken}/>
     </div>
   )
 }
