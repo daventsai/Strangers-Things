@@ -46,3 +46,19 @@ export async function loginUser(username,password){
         console.log('Error logging in to user: ', error)
     }
 }
+
+export async function fetchMe(token) {
+    try {
+        const response = await fetch(`${BASE_URL}/users/me`, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+        },
+        });
+        const result = await response.json();
+        console.log("Result of fetchMe: ", result);
+        return result;
+    } catch (error) {
+        console.error(error);
+    }
+}

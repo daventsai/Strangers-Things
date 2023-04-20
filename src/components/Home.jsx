@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 export default function Home(){
     
     const nav = useNavigate();
+    const {user} = useAuth();
 
     function logOut(){
         localStorage.removeItem('token');
@@ -21,7 +23,7 @@ export default function Home(){
                 }>Log Out</button>
             </header>
             <div>
-                <h1>Welcome in</h1>
+                <h1>Welcome in {user.username}</h1>
             </div>
         </div>
     )
