@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Home(){
     
-    const nav = useNavigate('');
+    const nav = useNavigate();
 
     function logOut(){
         localStorage.removeItem('token');

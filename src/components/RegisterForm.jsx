@@ -1,17 +1,21 @@
 import { useState } from "react";
 import { registerUser } from "../api/users";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 export default function RegisterForm({setToken}){
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
 
+    const nav = useNavigate();
+
     async function handleSubmit(e){
         e.preventDefault();
         try {
             const result = await registerUser(username, password);
-            console.log('Result on registering submission: ', result);
             setToken(result.data.token);
+            localStorage.setItem('token',result.data.token);
+            console.log('Result on registering submission: ', result);
+            nav('/');
         } catch (error) {
             console.log('Error on registering submission: ',error);
         }
