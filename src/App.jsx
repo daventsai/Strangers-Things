@@ -4,6 +4,7 @@ import './App.css';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 import Home from './components/Home';
+import useAuth from './hooks/useAuth';
 
 function ProtectedComponent(props){
   if (props.token === null){
@@ -18,10 +19,8 @@ function ProtectedComponent(props){
   }
 }
 
-
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token'));
-  
+  const {token,setToken} = useAuth();
 
   return (
     <div className='App'>

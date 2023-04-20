@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { registerUser } from "../api/users";
 import {Link, useNavigate} from 'react-router-dom';
+import useAuth from "../hooks/useAuth";
 
-export default function RegisterForm({setToken}){
+export default function RegisterForm(){
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
 
+    const {setToken} = useAuth();
     const nav = useNavigate();
 
     async function handleSubmit(e){
