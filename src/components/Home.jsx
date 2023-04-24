@@ -6,6 +6,7 @@ import React, {useState,useEffect} from 'react';
 export default function Home(){
     const nav = useNavigate();
     const {user} = useAuth();
+    const [postName, setPostName] = useState('');
 
     const [posts,setPosts] = useState([]);
     useEffect(()=>{
@@ -15,14 +16,13 @@ export default function Home(){
         getPosts();
     },[]);
 
+    const postDisplay = postName.length ? posts.filter((p)=>p.title.toLowerCase().includes(postName.toLowerCase())) : posts;
+
     function logOut(){
         localStorage.removeItem('token');
         nav('/login');
     }
 
-
-    const postDisplay = posts;
-    console.log('posts: ',posts);
     return(
         <div>
             <header>
@@ -52,6 +52,10 @@ export default function Home(){
                 :<h1>Welcome in {user.username}</h1>
                 }
             </div>
+            <div className='search'>
+                <p>Search for a post: </p>
+                <input type='text' onChange={(e)=>setPostName(e.target.value)}/>
+            </div>
             <div>{
                 postDisplay.map((post)=>{
                     return(
@@ -59,6 +63,7 @@ export default function Home(){
                             <h3>{post.title}</h3>
                             <h4>From: {post.author.username}</h4>
                             <p>{post.description}</p>
+                            <p>{post.price}</p>
                         </div>
                     )
                 })
