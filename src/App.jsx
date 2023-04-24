@@ -26,9 +26,10 @@ function App() {
       <Routes>
         <Route path='/login' element={<LoginForm setToken={setToken}/>}/>
         <Route path='/register' element={<RegisterForm setToken={setToken}/>}/>
+        <Route path='/' element={<Home/>}/>
         
         <Route element={<ProtectedComponent token={token}/>}>
-          <Route path='/' element={<Home/>}/>
+          
         </Route>
       </Routes>
     </div>

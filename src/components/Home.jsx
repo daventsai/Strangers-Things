@@ -1,7 +1,7 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import { fetchAllPosts } from "../api/posts";
-import {useState,useEffect} from 'react';
+import React, {useState,useEffect} from 'react';
 
 export default function Home(){
     const nav = useNavigate();
@@ -27,6 +27,18 @@ export default function Home(){
         <div>
             <header>
                 <p>Stranger's Things</p>
+                <div>{
+                    (!localStorage.getItem('token'))
+                    ?<Link to='/login'>Login</Link>
+                    : <div/>
+                }
+                </div>
+                <div>{
+                    (!localStorage.getItem('token'))
+                        ?<Link to='/register'>Register</Link>
+                        : <div/>
+                }
+                </div>
                 <button>Home</button>
                 <button>Posts</button>
                 <button>Profile</button>
@@ -34,8 +46,11 @@ export default function Home(){
                     logOut()
                 }>Log Out</button>
             </header>
-            <div>
-                <h1>Welcome in {user.username}</h1>
+            <div>{
+                (!localStorage.getItem('token'))
+                ?<h1>Welcome in Guest</h1>
+                :<h1>Welcome in {user.username}</h1>
+                }
             </div>
             <div>{
                 postDisplay.map((post)=>{
