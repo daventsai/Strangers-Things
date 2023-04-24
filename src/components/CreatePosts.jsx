@@ -1,16 +1,30 @@
-import { useNavigate,Link} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { fetchAllPosts } from "../api/posts";
-import React, {useState,useEffect} from 'react';
+import React, {useState} from 'react';
+import { makePost } from "../api/posts";
 
 export default function CreatePost(){
     const nav = useNavigate();
-    
-    const post= {
+    const {token}=useAuth();
+    const [postObj, setPostObj] = useState({
         title:'',
         description:'',
         price:'',
+        location:'',
         willDeliver:false
+    })
+
+    async function handleSubmit(e){
+        e.preventDefault();
+        console.log('postObj:',postObj)
+        try{
+            await makePost(token,postObj);
+            nav('/posts');
+        }
+        catch(error){
+            console.log('Error on posting');
+        }
+        
     }
 
 
@@ -31,14 +45,23 @@ export default function CreatePost(){
                     have a fair chance at obtaining your prize.
                 </h3>
             </div>
-            <div>
-                <p>Title: <input type='text' placeholder='The one ring to rule them all'/></p>
-                <p>Description: <input type='text' placeholder='I am one with the force and the force si with me'/></p>
-                <p>Price: $<input type='text' placeholder='1'/></p>
-                <p>Location: <input type='text' placeholder='The Watchtower'/></p>
-                <p><input type='checkbox'/> Willing to deliver?</p>
+            <form onSubmit={handleSubmit}>
+                <p>Title: <input type='text'
+                placeholder='The one ring to rule them all'
+                onChange={(e)=>setPostObj({title:e.target.value,...postObj})}/></p>
+                <p>Description: <input type='text'
+                placeholder='I am one with the force and the force is with me'
+                onChange={(e)=>setPostObj({description:e.target.value,...postObj})}/></p>
+                <p>Price: $<input type='text'
+                placeholder='1'
+                onChange={(e)=>setPostObj({price:e.target.value,...postObj})}/></p>
+                <p>Location: <input type='text'
+                placeholder='The Watchtower'
+                onChange={(e)=>setPostObj({location:e.target.value,...postObj})}/></p>
+                <p><input type='checkbox'
+                 onChange={(e)=>setPostObj({willDeliver:e.target.value,...postObj})}/> Willing to deliver?</p>
                 <button>Submit</button>
-            </div>
+            </form>
 
         </div>
     )
