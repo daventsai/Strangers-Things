@@ -1,22 +1,11 @@
 import { useNavigate,Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import { fetchAllPosts } from "../api/posts";
-import React, {useState,useEffect} from 'react';
+import React from 'react';
 
 export default function Home(){
     const nav = useNavigate();
     const {user} = useAuth();
-    const [postName, setPostName] = useState('');
-
-    const [posts,setPosts] = useState([]);
-    useEffect(()=>{
-        async function getPosts(){
-            setPosts(await fetchAllPosts());
-        }
-        getPosts();
-    },[]);
-
-    const postDisplay = postName.length ? posts.filter((p)=>p.title.toLowerCase().includes(postName.toLowerCase())) : posts;
+    
 
     function logOut(){
         localStorage.removeItem('token');
@@ -39,8 +28,8 @@ export default function Home(){
                         : <div/>
                 }
                 </div>
-                <button>Home</button>
-                <button>Posts</button>
+                <button onClick={()=>nav('/')}>Home</button>
+                <button onClick={()=>nav('/posts')}>Posts</button>
                 <button>Profile</button>
                 <button onClick={()=>
                     logOut()
@@ -51,23 +40,10 @@ export default function Home(){
                 ?<h1>Welcome in Guest</h1>
                 :<h1>Welcome in {user.username}</h1>
                 }
+                <h4>Take some time to browse upon my divine wares. What you seek may lie
+                    buried deep into the mountains of Stranger's Things.
+                </h4>
             </div>
-            <div className='search'>
-                <p>Search for a post: </p>
-                <input type='text' onChange={(e)=>setPostName(e.target.value)}/>
-            </div>
-            <div>{
-                postDisplay.map((post)=>{
-                    return(
-                        <div style={{border: '3px solid white', margin: '15px'}}>
-                            <h3>{post.title}</h3>
-                            <h4>From: {post.author.username}</h4>
-                            <p>{post.description}</p>
-                            <p>{post.price}</p>
-                        </div>
-                    )
-                })
-            }</div>
         </div>
     )
 }

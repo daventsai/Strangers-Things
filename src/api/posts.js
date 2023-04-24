@@ -11,3 +11,28 @@ export async function fetchAllPosts(){
         console.log('Error retrieving posts: ',error)
       }
 }
+
+export async function makePost(token,postObj){
+  try {
+    const response = await fetch(`${BASE_URL}/posts`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        post: {
+          title: postObj.title,
+          description: postObj.description,
+          price: postObj.price,
+          willDeliver: postObj.willDeliver
+        }
+      })
+    });
+    const result = await response.json();
+    console.log(result);
+    return result
+  } catch (error) {
+    console.log('Error making a post: ',error)
+  }
+}

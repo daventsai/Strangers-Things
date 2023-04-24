@@ -1,9 +1,12 @@
 import {Routes,Route,Navigate,Outlet} from 'react-router-dom';
 import './App.css';
+import useAuth from './hooks/useAuth';
+
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
 import Home from './components/Home';
-import useAuth from './hooks/useAuth';
+import AllPosts from './components/AllPosts';
+import CreatePost from './components/CreatePosts';
 
 function ProtectedComponent(props){
   if (props.token === null){
@@ -27,9 +30,10 @@ function App() {
         <Route path='/login' element={<LoginForm setToken={setToken}/>}/>
         <Route path='/register' element={<RegisterForm setToken={setToken}/>}/>
         <Route path='/' element={<Home/>}/>
+        <Route path='/posts' element={<AllPosts/>}/>
         
         <Route element={<ProtectedComponent token={token}/>}>
-          
+          <Route path='/posts/create' element={<CreatePost/>}/>
         </Route>
       </Routes>
     </div>
