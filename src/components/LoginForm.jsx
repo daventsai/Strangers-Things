@@ -2,6 +2,7 @@ import {Link,useNavigate} from 'react-router-dom';
 import { useState } from "react";
 import { loginUser } from '../api/users';
 import useAuth from '../hooks/useAuth';
+import Header from "./Header";
 
 export default function LoginForm(){
     const [username,setUsername] = useState('');
@@ -25,6 +26,7 @@ export default function LoginForm(){
 
     return(
         <div>
+            <Header/>
             <h1>Stranger's Things</h1>
             <h3>Enter Login Information</h3>
             <form onSubmit={handleSubmit}>

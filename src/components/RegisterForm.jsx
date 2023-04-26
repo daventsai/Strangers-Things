@@ -2,6 +2,7 @@ import { useState } from "react";
 import { registerUser } from "../api/users";
 import {Link, useNavigate} from 'react-router-dom';
 import useAuth from "../hooks/useAuth";
+import Header from "./Header";
 
 export default function RegisterForm(){
     const [username,setUsername] = useState('');
@@ -26,6 +27,7 @@ export default function RegisterForm(){
 
     return(
         <div>
+            <Header/>
             <h1>Registering a new user</h1>
             <h3>Enter new user's information</h3>
             <form onSubmit={handleSubmit}>

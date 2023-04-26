@@ -1,40 +1,15 @@
 import { useNavigate,Link} from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import React from 'react';
+import Header from "./Header";
 
 export default function Home(){
     const nav = useNavigate();
     const {user} = useAuth();
-    
-
-    function logOut(){
-        localStorage.removeItem('token');
-        nav('/login');
-    }
 
     return(
         <div>
-            <header>
-                <p>Stranger's Things</p>
-                <div>{
-                    (!localStorage.getItem('token'))
-                    ?<Link to='/login'>Login</Link>
-                    : <div/>
-                }
-                </div>
-                <div>{
-                    (!localStorage.getItem('token'))
-                        ?<Link to='/register'>Register</Link>
-                        : <div/>
-                }
-                </div>
-                <button onClick={()=>nav('/')}>Home</button>
-                <button onClick={()=>nav('/posts')}>Posts</button>
-                <button>Profile</button>
-                <button onClick={()=>
-                    logOut()
-                }>Log Out</button>
-            </header>
+            <Header/>
             <div>{
                 (!localStorage.getItem('token'))
                 ?<h1>Welcome in Guest</h1>
