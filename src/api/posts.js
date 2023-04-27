@@ -1,9 +1,13 @@
 const COHORT_NAME = '2301-FTB-ET-WEB-AM';
 const BASE_URL = `https://strangers-things.herokuapp.com/api/${COHORT_NAME}`;
 
-export async function fetchAllPosts(){
+export async function fetchAllPosts(token){
     try {
-        const response = await fetch(`${BASE_URL}/posts`)
+        const response = await fetch(`${BASE_URL}/posts`,{
+          headers: {
+          'Authorization': `Bearer ${token}`
+          }
+        })
         const result = await response.json();
         console.log('Getting posts result: ',result);
         return result.data.posts;

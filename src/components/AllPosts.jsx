@@ -6,14 +6,14 @@ import Header from "./Header";
 
 export default function AllPosts(){
     const nav = useNavigate();
-    const {user} = useAuth();
+    const {user,token} = useAuth();
     const [postName, setPostName] = useState('');
 
     
     const [posts,setPosts] = useState([]);
     useEffect(()=>{
         async function getPosts(){
-            setPosts(await fetchAllPosts());
+            setPosts(await fetchAllPosts(token));
         }
         getPosts();
     },[]);

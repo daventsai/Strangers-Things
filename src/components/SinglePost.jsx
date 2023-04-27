@@ -7,20 +7,15 @@ import useAuth from "../hooks/useAuth";
 export default function SinglePost(){
     const {postId} = useParams();
     const [posts,setPosts] = useState([]);
-    //const [messagesArr,setMessagesArr] = useState([]);
     let messagesArr = [];
     const {token,user} = useAuth();
     const [content, setContent] = useState('');
     useEffect(()=>{
         async function getPosts(){
-            setPosts(await fetchAllPosts());
+            setPosts(await fetchAllPosts(token));
         }
         getPosts();
     },[]);
-
-    // useEffect(()=>{
-
-    // },[messagesArr])
 
     const post = posts.find(p => p._id === postId);
     console.log('posts: ', posts);
@@ -32,7 +27,9 @@ export default function SinglePost(){
     async function handleSubmit(e){
         e.preventDefault();
         try {
-            postMessage(postId,token,content);
+            await postMessage(postId,token,content);
+            console.log('content after posting: ', content)
+            console.log('post message: ',post.messages)
         } catch (error) {
             console.log('Error on submitting a message',error)
         }
