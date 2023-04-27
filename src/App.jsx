@@ -7,6 +7,7 @@ import LoginForm from './components/LoginForm';
 import Home from './components/Home';
 import AllPosts from './components/AllPosts';
 import CreatePost from './components/CreatePosts';
+import SinglePost from './components/SinglePost';
 
 function ProtectedComponent(props){
   if (props.token === null){
@@ -34,6 +35,7 @@ function App() {
         
         <Route element={<ProtectedComponent token={token}/>}>
           <Route path='/posts/create' element={<CreatePost/>}/>
+          <Route path='/post/:postId' element={<SinglePost/>}/>
         </Route>
       </Routes>
     </div>

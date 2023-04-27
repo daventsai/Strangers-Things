@@ -20,12 +20,6 @@ export default function AllPosts(){
 
     const postDisplay = postName.length ? posts.filter((p)=>p.title.toLowerCase().includes(postName.toLowerCase())) : posts;
 
-
-    function logOut(){
-        localStorage.removeItem('token');
-        nav('/login');
-    }
-
     return(
         <div>
             <Header/>
@@ -50,6 +44,7 @@ export default function AllPosts(){
                             <h4>From: {post.author.username}</h4>
                             <p>{post.description}</p>
                             <p>{post.price}</p>
+                            <Link to={`/post/${post._id}`}>View the post here</Link>
                         </div>
                     )
                 })

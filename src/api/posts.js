@@ -25,7 +25,8 @@ export async function makePost(token,postObj){
           title: postObj.title,
           description: postObj.description,
           price: postObj.price,
-          willDeliver: postObj.willDeliver
+          willDeliver: postObj.willDeliver,
+          location: postObj.location
         }
       })
     });
@@ -34,5 +35,27 @@ export async function makePost(token,postObj){
     return result
   } catch (error) {
     console.log('Error making a post: ',error)
+  }
+}
+
+export async function postMessage(id,token,content){
+  try {
+    const response = await fetch(`${BASE_URL}/posts/${id}/messages`, {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        message: {
+          content
+        }
+      })
+    });
+    const result = await response.json();
+    console.log('postMessage Result',result);
+    return result;
+  } catch (error) {
+    console.log('Error updating a post: ',error)
   }
 }
