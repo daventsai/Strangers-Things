@@ -1,12 +1,14 @@
-import { useParams } from "react-router-dom"
+import { useParams,useNavigate } from "react-router-dom"
 import Header from "./Header"
 import { useState, useEffect} from "react";
-import { fetchAllPosts,postMessage } from "../api/posts";
+import { fetchAllPosts,postMessage,deletePost } from "../api/posts";
 import useAuth from "../hooks/useAuth";
 
 export default function SinglePost(){
+    const nav = useNavigate();
     const {postId} = useParams();
     const [posts,setPosts] = useState([]);
+    const [editMode,setEditMode] = useState(false);
     let messagesArr = [];
     const {token,user} = useAuth();
     const [content, setContent] = useState('');
@@ -28,10 +30,18 @@ export default function SinglePost(){
         e.preventDefault();
         try {
             await postMessage(postId,token,content);
-            console.log('content after posting: ', content)
-            console.log('post message: ',post.messages)
+            console.log('content after posting: ', content);
+            console.log('post message: ',post.messages);
         } catch (error) {
-            console.log('Error on submitting a message',error)
+            console.log('Error on submitting a message',error);
+        }
+    }
+    async function deletingPost(e){
+        try {
+            deletePost(postId,token);
+            nav('/');
+        } catch (error) {
+            console.log('Error on deleting a post',error);
         }
     }
 
@@ -50,6 +60,15 @@ export default function SinglePost(){
                     }
                     <p>Posted By: {post?.author.username}</p>
                     <p>Created Date: {post?.createdAt}</p>
+                    { user._id===post?.author._id
+                        ?
+                        <div>
+                            <button>Edit</button>
+                            <button onClick={()=> deletingPost()}>Delete</button>
+                        </div>
+                        :
+                        <div/>
+                    }
                 </div>
             </div>
             <form onSubmit={handleSubmit}>

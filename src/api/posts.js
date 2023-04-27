@@ -63,3 +63,20 @@ export async function postMessage(id,token,content){
     console.log('Error updating a post: ',error)
   }
 }
+
+export async function deletePost(id,token){
+  try {
+    const response = await fetch(`${BASE_URL}/posts/${id}`, {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+    const result = await response.json();
+    console.log(result);
+    return result
+  } catch (error) {
+    console.log('Error deleting a post: ',error)
+  }
+}
