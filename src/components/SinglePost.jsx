@@ -55,7 +55,7 @@ export default function SinglePost(){
             console.log('Error on deleting a post',error);
         }
     }
-    //not properly checking/unchecking on edit
+    
     return(
         <div>
             <Header/>
@@ -90,7 +90,8 @@ export default function SinglePost(){
                         <p>Description: <input type='text' defaultValue={post?.description} onChange={(e)=>setEditedPost({...editedPost,description:e.target.value})}></input></p>
                         <p>Price: <input type='text' defaultValue={post?.price} onChange={(e)=>setEditedPost({...editedPost,price:e.target.value})}></input></p>
                         <p>Location: <input type='text' defaultValue={post?.location} onChange={(e)=>setEditedPost({...editedPost,location:e.target.value})}></input></p>
-                        <p>Willing to deliver: <input type='checkbox' defaultValue={post?.willDeliver} onChange={(e)=>setEditedPost({...editedPost,willDeliver:(e.target.value==='on' ? true : false)})}></input></p>
+                        {/*------tried for a while checkbox can't auto-fill according to willDeliver, doesn't work------*/}
+                        <p>Willing to deliver: <input type='checkbox' checked={post?.willDeliver ? true : false} onChange={(e)=>setEditedPost({...editedPost,willDeliver:(e.target.value==='on' ? true : false)})}></input></p>
                         <p>Posted By: {post?.author.username}</p>
                         <p>Created Date: {post?.createdAt}</p>
                         <button>Submit</button>
