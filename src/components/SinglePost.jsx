@@ -13,13 +13,15 @@ export default function SinglePost(){
     let messagesArr = [];
     const {token,user} = useAuth();
     const [content, setContent] = useState('');
+    const [submitState,setSubmitState]=useState(false);
     useEffect(()=>{
         async function getPosts(){
             setPosts(await fetchAllPosts(token));
         }
         getPosts();
-    },[editMode]);
-
+    },[editMode,submitState]);
+    //putting in the edmitMode auto-refreshing now breaks the messages refreshing upon submission...
+    //created the submitState to try to fix, but it's not working
     let post = posts.find(p => p._id === postId);
     messagesArr= post ? post.messages : [];
 
@@ -42,6 +44,8 @@ export default function SinglePost(){
             console.log('new edited post info: ',editedPost)
             await updatePost(postId,token,editedPost.title,editedPost.description,editedPost.price,editedPost.location,editedPost.willDeliver)
             setEditMode(false);
+            setSubmitState(false);
+            messagesArr= post ? post.messages : [];
         }
         catch(error){
             console.log('Error on editing a message',error);
@@ -104,7 +108,7 @@ export default function SinglePost(){
                     <h3>Inquire about the item:</h3>
                     <input type='text' name='content' placeholder='What is it that you wish to know, young padawan?'
                     onChange={(e)=>setContent(e.target.value)}/>
-                    <button>Submit</button>
+                    <button onClick={()=>setSubmitState(true)}>Submit</button>
                 </div>
             </form>
 
