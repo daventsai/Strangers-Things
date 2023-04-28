@@ -13,23 +13,15 @@ export default function SinglePost(){
     let messagesArr = [];
     const {token,user} = useAuth();
     const [content, setContent] = useState('');
-    const [editState,setEditState]= useState(false);
     useEffect(()=>{
         async function getPosts(){
             setPosts(await fetchAllPosts(token));
         }
         getPosts();
-    },[]);
+    },[editMode]);
 
-    const post = posts.find(p => p._id === postId);
+    let post = posts.find(p => p._id === postId);
     messagesArr= post ? post.messages : [];
-    useEffect(()=>{
-        if (post && editState===false){
-            setEditedPost(post);
-            setEditState(true);
-        }
-    })
-    //page not reloading upon editting (idk about on message being sent), also will deliver not properly checking/unchecking on edit
 
     const msgDisplay = messagesArr;
 
@@ -63,7 +55,7 @@ export default function SinglePost(){
             console.log('Error on deleting a post',error);
         }
     }
-
+    //not properly checking/unchecking on edit
     return(
         <div>
             <Header/>
