@@ -20,7 +20,7 @@ export default function Header(){
             <div>
                 <button onClick={()=>nav('/')}>Home</button>
                 <button onClick={()=>nav('/posts')}>Posts</button>
-                <button>Profile</button>
+                <button onClick={()=>nav('/messages')}>Messages</button>
                 <button onClick={()=>
                     logOut()
                 }>Log Out</button>

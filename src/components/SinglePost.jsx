@@ -20,7 +20,7 @@ export default function SinglePost(){
         }
         getPosts();
     },[editMode,submitState]);
-    //putting in the edmitMode auto-refreshing now breaks the messages refreshing upon submission...
+    //putting in the editMode auto-refreshing now breaks the messages refreshing upon submission...
     //created the submitState to try to fix, but it's not working
     let post = posts.find(p => p._id === postId);
     messagesArr= post ? post.messages : [];
@@ -114,7 +114,7 @@ export default function SinglePost(){
 
             <h2>Messages</h2>
             <div>{
-                msgDisplay.map((msg)=>{
+                msgDisplay?.map((msg)=>{
                     return(
                         <div style={{border: '3px solid white', margin: '15px'}}>
                             <h3>{msg.fromUser.username}:</h3>

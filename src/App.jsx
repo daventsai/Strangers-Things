@@ -8,6 +8,7 @@ import Home from './components/Home';
 import AllPosts from './components/AllPosts';
 import CreatePost from './components/CreatePosts';
 import SinglePost from './components/SinglePost';
+import Messages from './components/Messages';
 
 function ProtectedComponent(props){
   if (props.token === null){
@@ -32,6 +33,7 @@ function App() {
         <Route path='/register' element={<RegisterForm setToken={setToken}/>}/>
         <Route path='/' element={<Home/>}/>
         <Route path='/posts' element={<AllPosts/>}/>
+        <Route path='/messages' element={<Messages/>}/>
         
         <Route element={<ProtectedComponent token={token}/>}>
           <Route path='/posts/create' element={<CreatePost/>}/>
