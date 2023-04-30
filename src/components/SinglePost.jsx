@@ -33,6 +33,8 @@ export default function SinglePost(){
             await postMessage(postId,token,content);
             console.log('content after posting: ', content);
             console.log('post message: ',post.messages);
+            setSubmitState(false);
+            messagesArr= post ? post.messages : [];
             
         } catch (error) {
             console.log('Error on submitting a message',error);
@@ -44,8 +46,7 @@ export default function SinglePost(){
             console.log('new edited post info: ',editedPost)
             await updatePost(postId,token,editedPost.title,editedPost.description,editedPost.price,editedPost.location,editedPost.willDeliver)
             setEditMode(false);
-            setSubmitState(false);
-            messagesArr= post ? post.messages : [];
+            
         }
         catch(error){
             console.log('Error on editing a message',error);
@@ -94,8 +95,7 @@ export default function SinglePost(){
                         <p>Description: <input type='text' defaultValue={post?.description} onChange={(e)=>setEditedPost({...editedPost,description:e.target.value})}></input></p>
                         <p>Price: <input type='text' defaultValue={post?.price} onChange={(e)=>setEditedPost({...editedPost,price:e.target.value})}></input></p>
                         <p>Location: <input type='text' defaultValue={post?.location} onChange={(e)=>setEditedPost({...editedPost,location:e.target.value})}></input></p>
-                        {/*------tried for a while checkbox can't auto-fill according to willDeliver, doesn't work------*/}
-                        <p>Willing to deliver: <input type='checkbox' checked={post?.willDeliver ? true : false} onChange={(e)=>setEditedPost({...editedPost,willDeliver:(e.target.value==='on' ? true : false)})}></input></p>
+                        <p>Willing to deliver: <input type='checkbox' defaultChecked={post?.willDeliver} onChange={(e)=>setEditedPost({...editedPost,willDeliver:(e.target.checked ? true : false)})}/></p>
                         <p>Posted By: {post?.author.username}</p>
                         <p>Created Date: {post?.createdAt}</p>
                         <button>Submit</button>

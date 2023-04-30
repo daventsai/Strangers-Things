@@ -53,7 +53,7 @@ export default function CreatePost(){
                 placeholder='The Watchtower'
                 onChange={(e)=>setPostObj({...postObj,location:e.target.value})}/></p>
                 <p><input type='checkbox'
-                 onChange={(e)=>setPostObj({...postObj,willDeliver:(e.target.value==='on' ? true : false)})}/> Willing to deliver?</p>
+                 onChange={(e)=>setPostObj({...postObj,willDeliver:(e.target.checked ? true : false)})}/> Willing to deliver?</p>
                 <button>Submit</button>
             </form>
 
